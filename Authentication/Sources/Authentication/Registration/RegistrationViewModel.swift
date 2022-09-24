@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-@available(iOS 13.0, *)
+@available(iOS 15.0, *)
 class RegistrationViewModel: ObservableObject {
     
     enum ViewState {

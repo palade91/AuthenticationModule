@@ -7,26 +7,71 @@
 
 import SwiftUI
 
-@available(iOS 13.0, *)
+@available(iOS 15.0, *)
 public struct LoginView: View {
+    
+    public init() { }
    
     @StateObject private var viewModel = LoginViewModel()
     
-    public init() { }
+    @Environment(\.presentationMode) var presentationMode
     
     public var body: some View {
-        switch viewModel.viewState {
-        case .loading:
-            Text("Loading...")
-        case .fail:
-            Text("Failed")
-        case .loaded:
-            Text("Loaded")
+        VStack {
+            switch viewModel.viewState {
+            case .empty:
+                EmptyLogin()
+            case .loading:
+                ProgressView("Please wait")
+            case .fail:
+                Text("Failed")
+            }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onReceive(viewModel.dismiss) { _ in
+            self.presentationMode.wrappedValue.dismiss()
+        }
+    }
+    
+    @ViewBuilder
+    private func EmptyLogin() -> some View {
+        VStack(alignment: .center, spacing: 40) {
+            VStack(alignment: .center, spacing: 20) {
+                TextField("Username", text: $viewModel.username)
+                    .textContentType(.username)
+                    .autocorrectionDisabled()
+                    .autocapitalization(.none)
+                    .frame(height: 40)
+                    .border(viewModel.username.isEmpty ? .red : .green, width: 2)
+                    .cornerRadius(4)
+                    .multilineTextAlignment(.center)
+                
+                SecureField("Password", text: $viewModel.password)
+                    .textContentType(.password)
+                    .frame(height: 40)
+                    .border(viewModel.password.isEmpty ? .red : .green, width: 2)
+                    .cornerRadius(4)
+                    .multilineTextAlignment(.center)
+                
+            }.padding(.horizontal, 20)
+            
+            Button {
+                self.viewModel.login()
+            } label: {
+                Text("Login")
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: 40)
+            .foregroundColor(.white)
+            .background(viewModel.isButtonActive ? Color.green : Color.gray)
+            .cornerRadius(4)
+            .disabled(!viewModel.isButtonActive)
+        }
+        .padding()
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 15, *)
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@available(iOS 13.0, *)
+@available(iOS 15.0, *)
 public struct RegistrationView: View {
     
     @StateObject private var viewModel = RegistrationViewModel()
@@ -26,7 +26,7 @@ public struct RegistrationView: View {
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 15.0, *)
 struct RegistrationView_Previews: PreviewProvider {
     static var previews: some View {
         RegistrationView()

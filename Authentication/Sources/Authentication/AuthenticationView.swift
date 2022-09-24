@@ -7,20 +7,42 @@
 
 import SwiftUI
 
-@available(iOS 13.0, *)
+@available(iOS 15.0, *)
 public struct AuthenticationView: View {
     
     public init() {}
     
+    @State private var showLogin: Bool = false
+    @State private var showRegistration: Bool = false
+    
     public var body: some View {
-        VStack(spacing: 5) {
+        List {
+            Section("Authentication") {
+                Button {
+                    showLogin = true
+                } label: {
+                    Text("Login")
+                }
+                
+                Button {
+                    showRegistration = true
+                } label: {
+                    Text("Registration")
+                }
+            }
+            
+            
+        }
+        .sheet(isPresented: $showLogin) {
             LoginView()
+        }
+        .sheet(isPresented: $showRegistration) {
             RegistrationView()
         }
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 15.0, *)
 struct AuthenticationView_Previews: PreviewProvider {
     static var previews: some View {
         AuthenticationView()
