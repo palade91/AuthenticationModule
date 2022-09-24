@@ -13,8 +13,9 @@ public struct AuthenticationView: View {
     public init() {}
     
     public var body: some View {
-        VStack {
+        VStack(spacing: 5) {
             LoginView()
+            RegistrationView()
         }
     }
 }

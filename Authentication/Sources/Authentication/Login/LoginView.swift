@@ -10,10 +10,19 @@ import SwiftUI
 @available(iOS 13.0, *)
 public struct LoginView: View {
    
+    @StateObject private var viewModel = LoginViewModel()
+    
     public init() { }
     
     public var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        switch viewModel.viewState {
+        case .loading:
+            Text("Loading...")
+        case .fail:
+            Text("Failed")
+        case .loaded:
+            Text("Loaded")
+        }
     }
 }
 
