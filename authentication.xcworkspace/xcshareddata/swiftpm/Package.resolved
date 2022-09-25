@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "git@github.com:palade91/LocalStorage.git",
       "state" : {
-        "revision" : "2546496180bf24daf4fd43f8889e159d13aa4274",
-        "version" : "0.0.1"
+        "revision" : "41f4c45304df6dfb9e089821e71e2a135928463e",
+        "version" : "0.0.3"
       }
     }
   ],

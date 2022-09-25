@@ -31,6 +31,13 @@ public struct AuthenticationView: View {
                 }
             }
             
+//            Section("Status") {
+//                Button {
+//                    
+//                } label: {
+//                    Text("Sign out")
+//                }
+//            }
             
         }
         .sheet(isPresented: $showLogin) {

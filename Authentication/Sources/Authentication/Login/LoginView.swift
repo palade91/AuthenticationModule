@@ -19,12 +19,10 @@ public struct LoginView: View {
     public var body: some View {
         VStack {
             switch viewModel.viewState {
-            case .empty:
-                EmptyLogin()
             case .loading:
                 ProgressView("Please wait")
-            case .fail:
-                Text("Failed")
+            default:
+                EmptyLogin(state: viewModel.viewState)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -34,7 +32,7 @@ public struct LoginView: View {
     }
     
     @ViewBuilder
-    private func EmptyLogin() -> some View {
+    private func EmptyLogin(state: LoginViewModel.ViewState) -> some View {
         VStack(alignment: .center, spacing: 40) {
             VStack(alignment: .center, spacing: 20) {
                 TextField("Username", text: $viewModel.username)
@@ -54,6 +52,12 @@ public struct LoginView: View {
                     .multilineTextAlignment(.center)
                 
             }.padding(.horizontal, 20)
+            
+            if state == .fail {
+                Text("The username or password are incorrect. Please try again!")
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(Color.red)
+            }
             
             Button {
                 self.viewModel.login()

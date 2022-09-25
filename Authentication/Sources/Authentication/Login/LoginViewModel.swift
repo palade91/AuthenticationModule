@@ -29,22 +29,28 @@ class LoginViewModel: ObservableObject {
     let dismiss = PassthroughSubject<Void, Never>()
     
     private var cancellable = Set<AnyCancellable>()
+    private let storage = LocalStorage()
     
     init() {
-        Publishers.CombineLatest($username, $password)
-            .sink { _ in } receiveValue: { username, password in
-                self.isButtonActive = !username.isEmpty && !password.isEmpty
-            }.store(in: &cancellable)
+        observeCredentials()
     }
     
     func login() {
         self.viewState = .loading
-        loadData()
+        let user: User? = storage.getValueStoreable(forKey: LocalStorageKeys.user)
+        let currentUser = User(username: username, password: password)
+        
+        if let user = user, user == currentUser {
+            dismiss.send()
+        } else {
+            viewState = .fail
+        }
     }
     
-    private func loadData() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.dismiss.send()
-        }
+    private func observeCredentials() {
+        Publishers.CombineLatest($username, $password)
+            .sink { _ in } receiveValue: { username, password in
+                self.isButtonActive = !username.isEmpty && !password.isEmpty
+            }.store(in: &cancellable)
     }
 }
