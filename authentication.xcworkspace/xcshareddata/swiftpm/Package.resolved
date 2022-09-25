@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "localstorage",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:palade91/LocalStorage.git",
+      "state" : {
+        "revision" : "2546496180bf24daf4fd43f8889e159d13aa4274",
+        "version" : "0.0.1"
+      }
+    }
+  ],
+  "version" : 2
+}
