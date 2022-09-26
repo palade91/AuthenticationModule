@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LocalStorage
 
 @available(iOS 15.0, *)
 public struct AuthenticationView: View {
@@ -14,31 +15,40 @@ public struct AuthenticationView: View {
     
     @State private var showLogin: Bool = false
     @State private var showRegistration: Bool = false
+    @State private var showSignOut: Bool = false
+    
+    private let storage = LocalStorage()
     
     public var body: some View {
         List {
-            Section("Authentication") {
-                Button {
-                    showLogin = true
-                } label: {
-                    Text("Login")
+            if showSignOut {
+                Section("Status") {
+                    Button {
+//                        self.storage.remove(key: LocalStorageKeys.user)
+                        self.showSignOut = false
+                    } label: {
+                        Text("Sign out")
+                    }
                 }
-                
-                Button {
-                    showRegistration = true
-                } label: {
-                    Text("Registration")
+            } else {
+                Section("Authentication") {
+                    Button {
+                        showLogin = true
+                    } label: {
+                        Text("Login")
+                    }
+                    
+                    Button {
+                        showRegistration = true
+                    } label: {
+                        Text("Registration")
+                    }
                 }
             }
-            
-//            Section("Status") {
-//                Button {
-//                    
-//                } label: {
-//                    Text("Sign out")
-//                }
-//            }
-            
+        }
+        .onAppear {
+//            let user: User? = storage.getValueStoreable(forKey: LocalStorageKeys.user)
+//            self.showSignOut = user != nil
         }
         .sheet(isPresented: $showLogin) {
             LoginView()

@@ -7,25 +7,46 @@
 
 import Foundation
 import SwiftUI
+import Combine
+import LocalStorage
 
 @available(iOS 15.0, *)
 class RegistrationViewModel: ObservableObject {
     
     enum ViewState {
         case loading
-        case fail
         case loaded
     }
     
-    @Published var viewState: ViewState = .loading
+    @Published var viewState: ViewState = .loaded
+    
+    @Published var email: String = ""
+    @Published var password: String = ""
+    
+    @Published var isButtonActive: Bool = false
+    
+    let dismiss = PassthroughSubject<Void, Never>()
+    
+    private var cancellable = Set<AnyCancellable>()
+    private let storage = LocalStorage()
     
     init() {
-        loadData()
+        observeCredentials()
     }
     
-    private func loadData() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.viewState = .loaded
-        }
+    func register() {
+        self.viewState = .loading
+        
+//        let user = User(email: email, password: password)
+//        storage.setValueStoreable(user, forKey: LocalStorageKeys.user)
+        
+        self.dismiss.send()
+    }
+    
+    private func observeCredentials() {
+        Publishers.CombineLatest($email, $password)
+            .sink { _ in } receiveValue: { email, password in
+                self.isButtonActive = !email.isEmpty && !password.isEmpty
+            }.store(in: &cancellable)
     }
 }

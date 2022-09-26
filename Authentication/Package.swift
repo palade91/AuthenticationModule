@@ -13,14 +13,18 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "git@github.com:palade91/LocalStorage.git", exact: "0.0.3")
+        .package(url: "git@github.com:palade91/LocalStorage.git", exact: "0.0.3"),
+        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", exact: "9.6.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "Authentication",
-            dependencies: ["LocalStorage"]),
+            dependencies: [
+                .product(name: "LocalStorage", package: "LocalStorage"),
+                .product(name: "FirebaseAuth", package: "firebase-ios-sdk")
+            ]),
         .testTarget(
             name: "AuthenticationTests",
             dependencies: ["Authentication"]),

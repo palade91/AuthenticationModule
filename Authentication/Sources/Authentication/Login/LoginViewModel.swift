@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import Combine
 import LocalStorage
+import Firebase
 
 @available(iOS 15.0, *)
 class LoginViewModel: ObservableObject {
@@ -21,9 +22,9 @@ class LoginViewModel: ObservableObject {
     
     @Published var viewState: ViewState = .empty
     
-    @Published var username: String = ""
+    @Published var email: String = ""
     @Published var password: String = ""
-    
+    @Published var rememberEmail: Bool = false
     @Published var isButtonActive: Bool = false
     
     let dismiss = PassthroughSubject<Void, Never>()
@@ -33,24 +34,40 @@ class LoginViewModel: ObservableObject {
     
     init() {
         observeCredentials()
+        observeRememberEmail()
     }
     
     func login() {
         self.viewState = .loading
-        let user: User? = storage.getValueStoreable(forKey: LocalStorageKeys.user)
-        let currentUser = User(username: username, password: password)
-        
-        if let user = user, user == currentUser {
-            dismiss.send()
-        } else {
-            viewState = .fail
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] (result, error) in
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+                self?.viewState = .fail
+            } else {
+                self?.dismiss.send()
+            }
         }
     }
     
     private func observeCredentials() {
-        Publishers.CombineLatest($username, $password)
-            .sink { _ in } receiveValue: { username, password in
-                self.isButtonActive = !username.isEmpty && !password.isEmpty
+        Publishers.CombineLatest($email, $password)
+            .sink { _ in } receiveValue: { email, password in
+                self.isButtonActive = !email.isEmpty && !password.isEmpty
             }.store(in: &cancellable)
+    }
+    
+    private func observeRememberEmail() {
+        let email: String? = storage.getValue(forKey: LocalStorageKeys.rememberEmail)
+        
+        self.email = email ?? ""
+        self.rememberEmail = email != nil
+        
+        $rememberEmail.sink { [weak self] value in
+            if value {
+                self?.storage.setValue(self?.email, forKey: LocalStorageKeys.rememberEmail)
+            } else {
+                self?.storage.remove(key: LocalStorageKeys.rememberEmail)
+            }
+        }.store(in: &cancellable)
     }
 }

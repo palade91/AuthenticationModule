@@ -35,14 +35,16 @@ public struct LoginView: View {
     private func EmptyLogin(state: LoginViewModel.ViewState) -> some View {
         VStack(alignment: .center, spacing: 40) {
             VStack(alignment: .center, spacing: 20) {
-                TextField("Username", text: $viewModel.username)
-                    .textContentType(.username)
+                TextField("Email", text: $viewModel.email)
+                    .textContentType(.emailAddress)
                     .autocorrectionDisabled()
                     .autocapitalization(.none)
                     .frame(height: 40)
-                    .border(viewModel.username.isEmpty ? .red : .green, width: 2)
+                    .border(viewModel.email.isEmpty ? .red : .green, width: 2)
                     .cornerRadius(4)
                     .multilineTextAlignment(.center)
+                
+                RememberEmail()
                 
                 SecureField("Password", text: $viewModel.password)
                     .textContentType(.password)
@@ -54,7 +56,7 @@ public struct LoginView: View {
             }.padding(.horizontal, 20)
             
             if state == .fail {
-                Text("The username or password are incorrect. Please try again!")
+                Text("The email or password are incorrect. Please try again!")
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color.red)
             }
@@ -72,6 +74,13 @@ public struct LoginView: View {
             .disabled(!viewModel.isButtonActive)
         }
         .padding()
+    }
+    
+    @ViewBuilder
+    private func RememberEmail() -> some View {
+        Toggle(isOn: $viewModel.rememberEmail) {
+            Text("Remember Email")
+        }.toggleStyle(CheckboxToggleStyle())
     }
 }
 

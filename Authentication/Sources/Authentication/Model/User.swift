@@ -10,7 +10,7 @@ import LocalStorage
 
 struct User: Codable, Equatable, Storeable {
     
-    let username: String
+    let email: String
     let password: String
     
     var storeData: Data? {
@@ -19,8 +19,8 @@ struct User: Codable, Equatable, Storeable {
         return encoded
     }
     
-    init(username: String, password: String) {
-        self.username = username
+    init(email: String, password: String) {
+        self.email = email
         self.password = password
     }
     

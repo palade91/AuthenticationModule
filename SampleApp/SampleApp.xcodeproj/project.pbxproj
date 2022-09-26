@@ -12,6 +12,8 @@
 		7500241D28DEFC6C00EDFDA8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7500241C28DEFC6C00EDFDA8 /* Assets.xcassets */; };
 		7500242128DEFC6C00EDFDA8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7500242028DEFC6C00EDFDA8 /* Preview Assets.xcassets */; };
 		7500242B28DEFDA200EDFDA8 /* Authentication in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 7500242A28DEFDA200EDFDA8 /* Authentication */; };
+		7585FFFC28E21579009E514E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7585FFFB28E21579009E514E /* FirebaseAuth */; };
+		7585FFFF28E218CD009E514E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7585FFFE28E218CD009E514E /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,7 @@
 		7500241E28DEFC6C00EDFDA8 /* SampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SampleApp.entitlements; sourceTree = "<group>"; };
 		7500242028DEFC6C00EDFDA8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7500242828DEFD4400EDFDA8 /* Authentication */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Authentication; path = ../Authentication; sourceTree = "<group>"; };
+		7585FFFE28E218CD009E514E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,6 +33,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7500242B28DEFDA200EDFDA8 /* Authentication in Frameworks */,
+				7585FFFC28E21579009E514E /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +60,7 @@
 		7500241728DEFC6B00EDFDA8 /* SampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				7585FFFE28E218CD009E514E /* GoogleService-Info.plist */,
 				7500241828DEFC6B00EDFDA8 /* SampleAppApp.swift */,
 				7500241A28DEFC6B00EDFDA8 /* ContentView.swift */,
 				7500241C28DEFC6C00EDFDA8 /* Assets.xcassets */,
@@ -99,6 +104,7 @@
 			name = SampleApp;
 			packageProductDependencies = (
 				7500242A28DEFDA200EDFDA8 /* Authentication */,
+				7585FFFB28E21579009E514E /* FirebaseAuth */,
 			);
 			productName = SampleApp;
 			productReference = 7500241528DEFC6B00EDFDA8 /* SampleApp.app */;
@@ -130,6 +136,7 @@
 			mainGroup = 7500240C28DEFC6B00EDFDA8;
 			packageReferences = (
 				7500242928DEFDA200EDFDA8 /* XCRemoteSwiftPackageReference "Authentication" */,
+				7585FFFA28E21579009E514E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 7500241628DEFC6B00EDFDA8 /* Products */;
 			projectDirPath = "";
@@ -147,6 +154,7 @@
 			files = (
 				7500242128DEFC6C00EDFDA8 /* Preview Assets.xcassets in Resources */,
 				7500241D28DEFC6C00EDFDA8 /* Assets.xcassets in Resources */,
+				7585FFFF28E218CD009E514E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,9 +288,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SampleApp/SampleApp.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SampleApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 556JYUKVPG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -315,9 +325,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SampleApp/SampleApp.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SampleApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 556JYUKVPG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -376,6 +388,15 @@
 				kind = branch;
 			};
 		};
+		7585FFFA28E21579009E514E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = versionRange;
+				maximumVersion = 10.0.0;
+				minimumVersion = 9.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -383,6 +404,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7500242928DEFDA200EDFDA8 /* XCRemoteSwiftPackageReference "Authentication" */;
 			productName = Authentication;
+		};
+		7585FFFB28E21579009E514E /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7585FFFA28E21579009E514E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
