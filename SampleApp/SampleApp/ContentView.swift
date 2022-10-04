@@ -20,11 +20,8 @@ struct ContentView: View {
                         AuthView(viewType: .registration)
                     }
                 }
-                
             }
         }
-        
-        
     }
 }
 

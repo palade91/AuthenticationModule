@@ -11,6 +11,9 @@ struct MainApp: App {
         FirebaseApp.configure()
         
         // Authentication config
-        Authentication.inject(brandColor: UIColor.red)
+        Authentication.inject(
+            brandTitle: "Authentication Sample App",
+            brandColor: UIColor.red
+        )
     }
 }

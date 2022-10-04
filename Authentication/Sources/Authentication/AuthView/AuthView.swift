@@ -18,6 +18,7 @@ public struct AuthView: View {
         self.viewModel = AuthViewModel(viewType: viewType)
     }
     
+    private let brandTitle: String = Authentication.brandTitle
     private let brandColor: UIColor = Authentication.brandColor
    
     public var body: some View {
@@ -44,6 +45,12 @@ public struct AuthView: View {
         viewType: AuthViewModel.ViewType
     ) -> some View {
         VStack(alignment: .center, spacing: 40) {
+            Text(brandTitle)
+                .lineLimit(3)
+                .multilineTextAlignment(.center)
+                .font(Font.largeTitle.bold())
+                .foregroundColor(Color(uiColor: brandColor))
+                
             VStack(alignment: .center, spacing: 20) {
                 TextField("Email", text: $viewModel.email)
                     .textContentType(.emailAddress)
@@ -53,10 +60,6 @@ public struct AuthView: View {
                     .border(viewModel.email.isEmpty ? .red : .green, width: 2)
                     .cornerRadius(4)
                     .multilineTextAlignment(.center)
-                
-                if viewType == .login {
-                    RememberEmail()
-                }
                 
                 SecureField("Password", text: $viewModel.password)
                     .textContentType(.password)
@@ -73,6 +76,10 @@ public struct AuthView: View {
                     .foregroundColor(Color.red)
             }
             
+            if viewType == .login {
+                RememberEmail()
+            }
+            
             Button {
                 self.viewModel.action()
             } label: {
@@ -82,7 +89,7 @@ public struct AuthView: View {
             .frame(height: 40)
             .foregroundColor(.white)
             .background(viewModel.isButtonActive ? Color(uiColor: brandColor) : Color.gray)
-            .cornerRadius(4)
+            .cornerRadius(20)
             .disabled(!viewModel.isButtonActive)
         }
         .padding()
