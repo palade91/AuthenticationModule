@@ -10,7 +10,21 @@ import Authentication
 
 struct ContentView: View {
     var body: some View {
-        AuthenticationView()
+        NavigationView {
+            List {
+                Section("Authentication") {
+                    NavigationLink("Login") {
+                        AuthView(viewType: .login)
+                    }
+                    NavigationLink("Register") {
+                        AuthView(viewType: .registration)
+                    }
+                }
+                
+            }
+        }
+        
+        
     }
 }
 

@@ -9,5 +9,8 @@ struct MainApp: App {
     
     init() {
         FirebaseApp.configure()
+        
+        // Authentication config
+        Authentication.inject(brandColor: UIColor.red)
     }
 }

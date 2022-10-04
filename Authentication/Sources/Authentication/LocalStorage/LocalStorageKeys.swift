@@ -9,5 +9,5 @@ import Foundation
 import LocalStorage
 
 enum LocalStorageKeys: String, LocalStorageKeysProtocol {
-    case rememberEmail
+    case email
 }

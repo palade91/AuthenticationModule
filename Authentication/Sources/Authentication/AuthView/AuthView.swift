@@ -1,28 +1,35 @@
 //
-//  LoginView.swift
+//  AuthView.swift
 //  
 //
 //  Created by Catalin Palade on 24/09/2022.
 //
 
 import SwiftUI
+import UIKit
 
 @available(iOS 15.0, *)
-public struct LoginView: View {
-    
-    public init() { }
-   
-    @StateObject private var viewModel = LoginViewModel()
+public struct AuthView: View {
     
     @Environment(\.presentationMode) var presentationMode
+    @ObservedObject private var viewModel: AuthViewModel
     
+    public init(viewType: AuthViewModel.ViewType) {
+        self.viewModel = AuthViewModel(viewType: viewType)
+    }
+    
+    private let brandColor: UIColor = Authentication.brandColor
+   
     public var body: some View {
         VStack {
             switch viewModel.viewState {
             case .loading:
                 ProgressView("Please wait")
             default:
-                EmptyLogin(state: viewModel.viewState)
+                DefaultAuthView(
+                    state: viewModel.viewState,
+                    viewType: viewModel.viewType
+                )
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -32,7 +39,10 @@ public struct LoginView: View {
     }
     
     @ViewBuilder
-    private func EmptyLogin(state: LoginViewModel.ViewState) -> some View {
+    private func DefaultAuthView(
+        state: AuthViewModel.ViewState,
+        viewType: AuthViewModel.ViewType
+    ) -> some View {
         VStack(alignment: .center, spacing: 40) {
             VStack(alignment: .center, spacing: 20) {
                 TextField("Email", text: $viewModel.email)
@@ -44,7 +54,9 @@ public struct LoginView: View {
                     .cornerRadius(4)
                     .multilineTextAlignment(.center)
                 
-                RememberEmail()
+                if viewType == .login {
+                    RememberEmail()
+                }
                 
                 SecureField("Password", text: $viewModel.password)
                     .textContentType(.password)
@@ -62,14 +74,14 @@ public struct LoginView: View {
             }
             
             Button {
-                self.viewModel.login()
+                self.viewModel.action()
             } label: {
-                Text("Login")
+                Text(viewType == .login ? "Login" : "Register")
             }
             .frame(maxWidth: .infinity)
             .frame(height: 40)
             .foregroundColor(.white)
-            .background(viewModel.isButtonActive ? Color.green : Color.gray)
+            .background(viewModel.isButtonActive ? Color(uiColor: brandColor) : Color.gray)
             .cornerRadius(4)
             .disabled(!viewModel.isButtonActive)
         }
@@ -87,6 +99,6 @@ public struct LoginView: View {
 @available(iOS 15, *)
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        AuthView(viewType: .login)
     }
 }

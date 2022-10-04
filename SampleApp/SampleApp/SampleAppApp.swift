@@ -7,12 +7,16 @@
 
 import SwiftUI
 import Firebase
+import Authentication
 
 @main
 struct SampleAppApp: App {
     
     init() {
         FirebaseApp.configure()
+        
+        // Authentication config
+        Authentication.inject(brandColor: UIColor.red)
     }
     
     var body: some Scene {
